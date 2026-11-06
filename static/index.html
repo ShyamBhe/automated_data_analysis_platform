@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoAnalytics</title>
+<style>
+:root{--bg:#f6f7f4;--surface:#fff;--ink:#1d2421;--muted:#66706b;--line:#dfe3dc;--accent:#1f6f5c;--warn:#b4531c;--err:#b3261e;--ok:#1f6f5c;--chart2:#8a9a5b}
+@media (prefers-color-scheme:dark){:root{--bg:#121715;--surface:#1a211e;--ink:#e8ece9;--muted:#98a39d;--line:#2a332f;--accent:#4fb89c;--warn:#e0884f;--err:#f08a82;--ok:#4fb89c;--chart2:#b4c27a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line)}
+h1{font-size:20px;margin:0;font-weight:600}
+.sub{color:var(--muted);font-size:13px}
+main{max-width:1180px;margin:0 auto;padding:24px 28px;display:grid;gap:20px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.kpi,.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px}
+.kpi b{display:block;font-size:26px;font-weight:600;margin-top:2px}
+.kpi span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.grid,.grid2{grid-template-columns:1fr}main,header{padding-left:16px;padding-right:16px}}
+h2{font-size:14px;margin:0 0 12px;font-weight:600}
+canvas{max-height:280px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:500}
+.wrap{overflow-x:auto}
+.tag{padding:1px 8px;border-radius:10px;font-size:12px;border:1px solid currentColor}
+.success{color:var(--ok)}.failed{color:var(--err)}.skipped,.running{color:var(--muted)}
+.alert{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.alert.warning b{color:var(--warn)}.alert.error b{color:var(--err)}
+label.btn{background:var(--accent);color:#fff;border-radius:5px;padding:9px 16px;cursor:pointer}
+label.btn:focus-within{outline:2px solid var(--ink);outline-offset:2px}
+.empty{color:var(--muted);padding:12px 0}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>AutoAnalytics</h1><div class="sub" id="updated">Waiting for data</div></div>
+  <label class="btn">Upload CSV or Excel<input id="file" type="file" accept=".csv,.xlsx" multiple hidden></label>
+</header>
+<main>
+  <section class="kpis" id="kpis"></section>
+  <section class="grid">
+    <div class="panel"><h2>Daily revenue</h2><canvas id="cDaily"></canvas></div>
+    <div class="panel"><h2>Alerts</h2><div id="alerts"></div></div>
+  </section>
+  <section class="grid2">
+    <div class="panel"><h2>Revenue by region</h2><canvas id="cRegion"></canvas></div>
+    <div class="panel"><h2>Revenue by product</h2><canvas id="cProduct"></canvas></div>
+  </section>
+  <section class="panel"><h2>Run history</h2><div class="wrap"><table id="runs"></table></div></section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const $=s=>document.querySelector(s), fmt=n=>Number(n).toLocaleString(undefined,{maximumFractionDigits:0});
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const charts={};
+function draw(id,type,labels,data,colors,horizontal){
+  const cfg={labels,datasets:[{data,backgroundColor:colors||css('--accent'),borderColor:css('--accent'),tension:.25,pointRadius:type==='line'?3:0}]};
+  if(charts[id]){charts[id].data=cfg;charts[id].update();return}
+  Chart.defaults.color=css('--muted');
+  charts[id]=new Chart($(id),{type,data:cfg,options:{indexAxis:horizontal?'y':'x',plugins:{legend:{display:false}},scales:{x:{grid:{color:css('--line')},ticks:{maxTicksLimit:8}},y:{grid:{color:css('--line')}}}}});
+}
+async function load(){
+  const [s,runs,alerts]=await Promise.all(['summary','runs','alerts'].map(k=>fetch('/api/'+k).then(r=>r.json())));
+  if(s.kpis){
+    const k=s.kpis, ch=k.last_day_change_pct;
+    $('#kpis').innerHTML=[['Revenue','$'+fmt(k.revenue)],['Orders',fmt(k.orders)],['Average order','$'+fmt(k.avg_order_value)],
+      ['Latest day vs prior week',ch==null?'n/a':(ch>0?'+':'')+ch+'%']].map(([a,b])=>`<div class="kpi"><span>${a}</span><b>${b}</b></div>`).join('');
+    $('#updated').textContent='Data through '+k.last_day+', refreshed '+new Date(s.updated_at).toLocaleString();
+    const an=new Set(s.anomalies.map(a=>a.day));
+    draw('#cDaily','line',s.daily.map(d=>d.day),s.daily.map(d=>d.revenue),s.daily.map(d=>an.has(d.day)?css('--warn'):css('--accent')));
+    draw('#cRegion','bar',s.by_region.map(d=>d.name),s.by_region.map(d=>d.revenue));
+    draw('#cProduct','bar',s.by_product.map(d=>d.name),s.by_product.map(d=>d.revenue),css('--chart2'),true);
+  } else $('#kpis').innerHTML='<div class="empty">No data yet. Upload a CSV or Excel file, or drop one in data/inbox.</div>';
+  $('#alerts').innerHTML=alerts.length?alerts.slice(0,8).map(a=>`<div class="alert ${esc(a.level)}"><b>${esc(a.level)}</b> ${esc(a.message)}</div>`).join(''):'<div class="empty">No alerts.</div>';
+  $('#runs').innerHTML='<tr><th>File</th><th>Status</th><th>New</th><th>Updated</th><th>Quarantined</th><th>Finished</th></tr>'+
+    runs.map(r=>`<tr><td>${esc(r.file)}</td><td><span class="tag ${esc(r.status)}">${esc(r.status)}</span>${r.message?' '+esc(r.message):''}</td><td>${r.inserted}</td><td>${r.updated}</td><td>${r.quarantined}</td><td>${esc(r.finished_at||'')}</td></tr>`).join('');
+}
+$('#file').addEventListener('change',async e=>{
+  for(const f of e.target.files){const fd=new FormData();fd.append('file',f);
+    const r=await fetch('/api/upload',{method:'POST',body:fd}); if(!r.ok) alert((await r.json()).detail||'Upload failed');}
+  e.target.value='';load();
+});
+load();setInterval(load,10000);
+</script>
+</body>
+</html>
