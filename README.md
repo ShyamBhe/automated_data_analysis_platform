@@ -39,3 +39,10 @@ pandas -> Polars/DuckDB/Spark.
 
 ## Environment variables
 DATA_DIR, DB_PATH, SCAN_SECONDS, DROP_ALERT_PCT (default 20), ANOMALY_Z (default 3)
+
+## Deploy with Docker
+    docker build -t autoanalytics .
+    docker run -d --name autoanalytics --restart unless-stopped \
+      -v autoanalytics_data:/data -p 8000:8000 autoanalytics
+Keep a single worker (the scheduler runs inside the app) and mount a persistent volume at /data.
+Add authentication (e.g. Caddy basic auth) before exposing it to the internet.
