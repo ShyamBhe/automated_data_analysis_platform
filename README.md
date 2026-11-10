@@ -2,7 +2,7 @@
 
 An open-source platform that analyzes data automatically and keeps itself up to date when new or
 changed data arrives. It has two parts:
-
+ Available at primary URL https://automated-data-analysis-platform.onrender.com
 1. **Sales dashboard** (`/`): watches an inbox for CSV/Excel order files, loads only what is new or
    changed, and refreshes KPIs, charts and alerts.
 2. **Data cleaning and analysis** (`/datasets`): upload any CSV, TSV, JSON, JSONL, XML or Excel file,
