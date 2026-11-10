@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS quarantine (
 CREATE TABLE IF NOT EXISTS alerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT, created_at TEXT, level TEXT, message TEXT, run_id INTEGER);
 CREATE TABLE IF NOT EXISTS results (key TEXT PRIMARY KEY, value TEXT, computed_at TEXT);
+CREATE TABLE IF NOT EXISTS datasets (
+    id TEXT PRIMARY KEY, name TEXT, fmt TEXT, rows INTEGER, cols INTEGER,
+    created_at TEXT, cleaned_at TEXT);
 """
 
 

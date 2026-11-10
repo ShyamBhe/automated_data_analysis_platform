@@ -32,12 +32,14 @@ th{color:var(--muted);font-weight:500}
 .alert.warning b{color:var(--warn)}.alert.error b{color:var(--err)}
 label.btn{background:var(--accent);color:#fff;border-radius:5px;padding:9px 16px;cursor:pointer}
 label.btn:focus-within{outline:2px solid var(--ink);outline-offset:2px}
+nav a{color:var(--accent);font-size:14px}
 .empty{color:var(--muted);padding:12px 0}
 </style>
 </head>
 <body>
 <header>
   <div><h1>AutoAnalytics</h1><div class="sub" id="updated">Waiting for data</div></div>
+  <nav><a href="/datasets">Data cleaning</a></nav>
   <label class="btn">Upload CSV or Excel<input id="file" type="file" accept=".csv,.xlsx" multiple hidden></label>
 </header>
 <main>
@@ -85,6 +87,7 @@ $('#file').addEventListener('change',async e=>{
     const r=await fetch('/api/upload',{method:'POST',body:fd}); if(!r.ok) alert((await r.json()).detail||'Upload failed');}
   e.target.value='';load();
 });
+fetch('/api/config').then(r=>r.json()).then(c=>{if(c.demo)document.querySelector('label.btn').hidden=true});
 load();setInterval(load,10000);
 </script>
 </body>

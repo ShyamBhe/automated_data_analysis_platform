@@ -1,0 +1,1478 @@
+{
+ "customers": [
+  {
+   "id": 1,
+   "name": "Customer 1",
+   "age": 35,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44166"
+   },
+   "spent": 316.38,
+   "tags": []
+  },
+  {
+   "id": 2,
+   "name": "Customer 2",
+   "age": 67,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44398"
+   },
+   "spent": 403.33,
+   "tags": []
+  },
+  {
+   "id": 3,
+   "name": "Customer 3",
+   "age": 43,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44994"
+   },
+   "spent": 305.94,
+   "tags": []
+  },
+  {
+   "id": 4,
+   "name": "Customer 4",
+   "age": 76,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44617"
+   },
+   "spent": 100.09,
+   "tags": []
+  },
+  {
+   "id": 5,
+   "name": "Customer 5",
+   "age": 250,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44282"
+   },
+   "spent": 202.52,
+   "tags": []
+  },
+  {
+   "id": 6,
+   "name": "Customer 6",
+   "age": 74,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44635"
+   },
+   "spent": 179.23,
+   "tags": []
+  },
+  {
+   "id": 7,
+   "name": "Customer 7",
+   "age": 78,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44262"
+   },
+   "spent": 214.16,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Customer 8",
+   "age": 35,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44520"
+   },
+   "spent": 136.09,
+   "tags": []
+  },
+  {
+   "id": 9,
+   "name": "Customer 9",
+   "age": null,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44310"
+   },
+   "spent": 117.86,
+   "tags": []
+  },
+  {
+   "id": 10,
+   "name": "Customer 10",
+   "age": 65,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44854"
+   },
+   "spent": 143.54,
+   "tags": []
+  },
+  {
+   "id": 11,
+   "name": "Customer 11",
+   "age": 72,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44441"
+   },
+   "spent": 428.05,
+   "tags": []
+  },
+  {
+   "id": 12,
+   "name": "Customer 12",
+   "age": 74,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44677"
+   },
+   "spent": 318.33,
+   "tags": []
+  },
+  {
+   "id": 13,
+   "name": "Customer 13",
+   "age": "n/a",
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44484"
+   },
+   "spent": 217.85,
+   "tags": []
+  },
+  {
+   "id": 14,
+   "name": "Customer 14",
+   "age": 60,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44354"
+   },
+   "spent": 328.5,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Customer 15",
+   "age": 42,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44670"
+   },
+   "spent": 573.44,
+   "tags": []
+  },
+  {
+   "id": 16,
+   "name": "Customer 16",
+   "age": null,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44301"
+   },
+   "spent": 430.28,
+   "tags": []
+  },
+  {
+   "id": 17,
+   "name": "Customer 17",
+   "age": 63,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44473"
+   },
+   "spent": 340.93,
+   "tags": []
+  },
+  {
+   "id": 18,
+   "name": "Customer 18",
+   "age": 75,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44205"
+   },
+   "spent": 306.1,
+   "tags": []
+  },
+  {
+   "id": 19,
+   "name": "Customer 19",
+   "age": 57,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44102"
+   },
+   "spent": 223.23,
+   "tags": []
+  },
+  {
+   "id": 20,
+   "name": "Customer 20",
+   "age": 64,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44813"
+   },
+   "spent": 164.63,
+   "tags": []
+  },
+  {
+   "id": 21,
+   "name": "Customer 21",
+   "age": 56,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44966"
+   },
+   "spent": 1000000.0,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 22,
+   "name": "Customer 22",
+   "age": 18,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44211"
+   },
+   "spent": 88.08,
+   "tags": []
+  },
+  {
+   "id": 23,
+   "name": "Customer 23",
+   "age": 52,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44599"
+   },
+   "spent": 301.59,
+   "tags": []
+  },
+  {
+   "id": 24,
+   "name": "Customer 24",
+   "age": 32,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44841"
+   },
+   "spent": 209.78,
+   "tags": []
+  },
+  {
+   "id": 25,
+   "name": "Customer 25",
+   "age": 72,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44388"
+   },
+   "spent": 550.56,
+   "tags": []
+  },
+  {
+   "id": 26,
+   "name": "Customer 26",
+   "age": 24,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44822"
+   },
+   "spent": 177.84,
+   "tags": []
+  },
+  {
+   "id": 27,
+   "name": "Customer 27",
+   "age": 48,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44653"
+   },
+   "spent": 347.86,
+   "tags": []
+  },
+  {
+   "id": 28,
+   "name": "Customer 28",
+   "age": 78,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44397"
+   },
+   "spent": 661.49,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 29,
+   "name": "Customer 29",
+   "age": 21,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44685"
+   },
+   "spent": 208.3,
+   "tags": []
+  },
+  {
+   "id": 30,
+   "name": "Customer 30",
+   "age": 64,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44287"
+   },
+   "spent": 213.47,
+   "tags": []
+  },
+  {
+   "id": 31,
+   "name": "Customer 31",
+   "age": 999,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44868"
+   },
+   "spent": 69.84,
+   "tags": []
+  },
+  {
+   "id": 32,
+   "name": "Customer 32",
+   "age": 53,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44327"
+   },
+   "spent": 175.89,
+   "tags": []
+  },
+  {
+   "id": 33,
+   "name": "Customer 33",
+   "age": 65,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44766"
+   },
+   "spent": 230.34,
+   "tags": []
+  },
+  {
+   "id": 34,
+   "name": "Customer 34",
+   "age": 39,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44607"
+   },
+   "spent": 172.56,
+   "tags": []
+  },
+  {
+   "id": 35,
+   "name": "Customer 35",
+   "age": 61,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44056"
+   },
+   "spent": 226.05,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 36,
+   "name": "Customer 36",
+   "age": 79,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44753"
+   },
+   "spent": 113.23,
+   "tags": []
+  },
+  {
+   "id": 37,
+   "name": "Customer 37",
+   "age": 33,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44630"
+   },
+   "spent": 342.77,
+   "tags": []
+  },
+  {
+   "id": 38,
+   "name": "Customer 38",
+   "age": 36,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44650"
+   },
+   "spent": 326.49,
+   "tags": []
+  },
+  {
+   "id": 39,
+   "name": "Customer 39",
+   "age": 74,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44914"
+   },
+   "spent": 106.36,
+   "tags": []
+  },
+  {
+   "id": 40,
+   "name": "Customer 40",
+   "age": 47,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44772"
+   },
+   "spent": 123.25,
+   "tags": []
+  },
+  {
+   "id": 41,
+   "name": "Customer 41",
+   "age": null,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44816"
+   },
+   "spent": 403.65,
+   "tags": []
+  },
+  {
+   "id": 42,
+   "name": "Customer 42",
+   "age": null,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44950"
+   },
+   "spent": 277.93,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 43,
+   "name": "Customer 43",
+   "age": 35,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44577"
+   },
+   "spent": 123.93,
+   "tags": []
+  },
+  {
+   "id": 44,
+   "name": "Customer 44",
+   "age": 25,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44091"
+   },
+   "spent": 209.64,
+   "tags": []
+  },
+  {
+   "id": 45,
+   "name": "Customer 45",
+   "age": 31,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44485"
+   },
+   "spent": 148.74,
+   "tags": []
+  },
+  {
+   "id": 46,
+   "name": "Customer 46",
+   "age": 48,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44714"
+   },
+   "spent": 246.59,
+   "tags": []
+  },
+  {
+   "id": 47,
+   "name": "Customer 47",
+   "age": 51,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44244"
+   },
+   "spent": 733.12,
+   "tags": []
+  },
+  {
+   "id": 48,
+   "name": "Customer 48",
+   "age": 63,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44819"
+   },
+   "spent": 574.04,
+   "tags": []
+  },
+  {
+   "id": 49,
+   "name": "Customer 49",
+   "age": 47,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44752"
+   },
+   "spent": 398.09,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 50,
+   "name": "Customer 50",
+   "age": 45,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44370"
+   },
+   "spent": 241.59,
+   "tags": []
+  },
+  {
+   "id": 51,
+   "name": "Customer 51",
+   "age": 69,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44043"
+   },
+   "spent": 151.64,
+   "tags": []
+  },
+  {
+   "id": 52,
+   "name": "Customer 52",
+   "age": 78,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44183"
+   },
+   "spent": 340.26,
+   "tags": []
+  },
+  {
+   "id": 53,
+   "name": "Customer 53",
+   "age": 28,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44472"
+   },
+   "spent": 267.69,
+   "tags": []
+  },
+  {
+   "id": 54,
+   "name": "Customer 54",
+   "age": 59,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44040"
+   },
+   "spent": 248.39,
+   "tags": []
+  },
+  {
+   "id": 55,
+   "name": "Customer 55",
+   "age": 77,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44756"
+   },
+   "spent": 229.2,
+   "tags": []
+  },
+  {
+   "id": 56,
+   "name": "Customer 56",
+   "age": 33,
+   "active": "no",
+   "address": {
+    "city": null,
+    "zip": "44588"
+   },
+   "spent": 238.69,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 57,
+   "name": "Customer 57",
+   "age": 21,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44330"
+   },
+   "spent": 485.3,
+   "tags": []
+  },
+  {
+   "id": 58,
+   "name": "Customer 58",
+   "age": 64,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44017"
+   },
+   "spent": 189.59,
+   "tags": []
+  },
+  {
+   "id": 59,
+   "name": "Customer 59",
+   "age": 31,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44866"
+   },
+   "spent": 247.32,
+   "tags": []
+  },
+  {
+   "id": 60,
+   "name": "Customer 60",
+   "age": 25,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44829"
+   },
+   "spent": 309.53,
+   "tags": []
+  },
+  {
+   "id": 61,
+   "name": "Customer 61",
+   "age": "n/a",
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44145"
+   },
+   "spent": 222.48,
+   "tags": []
+  },
+  {
+   "id": 62,
+   "name": "Customer 62",
+   "age": 46,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44344"
+   },
+   "spent": 295.22,
+   "tags": []
+  },
+  {
+   "id": 63,
+   "name": "Customer 63",
+   "age": 45,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44755"
+   },
+   "spent": 240.4,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 64,
+   "name": "Customer 64",
+   "age": 45,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44391"
+   },
+   "spent": 289.61,
+   "tags": []
+  },
+  {
+   "id": 65,
+   "name": "Customer 65",
+   "age": 42,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44576"
+   },
+   "spent": 344.51,
+   "tags": []
+  },
+  {
+   "id": 66,
+   "name": "Customer 66",
+   "age": 33,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44488"
+   },
+   "spent": 375.9,
+   "tags": []
+  },
+  {
+   "id": 67,
+   "name": "Customer 67",
+   "age": 76,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44907"
+   },
+   "spent": 242.31,
+   "tags": []
+  },
+  {
+   "id": 68,
+   "name": "Customer 68",
+   "age": 67,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44455"
+   },
+   "spent": 88.14,
+   "tags": []
+  },
+  {
+   "id": 69,
+   "name": "Customer 69",
+   "age": 36,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44530"
+   },
+   "spent": 79.22,
+   "tags": []
+  },
+  {
+   "id": 70,
+   "name": "Customer 70",
+   "age": 44,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44052"
+   },
+   "spent": 527.99,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 71,
+   "name": "Customer 71",
+   "age": 71,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44886"
+   },
+   "spent": 540.48,
+   "tags": []
+  },
+  {
+   "id": 72,
+   "name": "Customer 72",
+   "age": 45,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44479"
+   },
+   "spent": 314.56,
+   "tags": []
+  },
+  {
+   "id": 73,
+   "name": "Customer 73",
+   "age": 42,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44513"
+   },
+   "spent": 616.04,
+   "tags": []
+  },
+  {
+   "id": 74,
+   "name": "Customer 74",
+   "age": 35,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44381"
+   },
+   "spent": 75.61,
+   "tags": []
+  },
+  {
+   "id": 75,
+   "name": "Customer 75",
+   "age": 33,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44480"
+   },
+   "spent": 653.41,
+   "tags": []
+  },
+  {
+   "id": 76,
+   "name": "Customer 76",
+   "age": 30,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44049"
+   },
+   "spent": 277.49,
+   "tags": []
+  },
+  {
+   "id": 77,
+   "name": "Customer 77",
+   "age": 37,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44509"
+   },
+   "spent": 457.1,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 78,
+   "name": "Customer 78",
+   "age": -5,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44288"
+   },
+   "spent": 532.32,
+   "tags": []
+  },
+  {
+   "id": 79,
+   "name": "Customer 79",
+   "age": 32,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44620"
+   },
+   "spent": 520.37,
+   "tags": []
+  },
+  {
+   "id": 80,
+   "name": "Customer 80",
+   "age": 25,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44101"
+   },
+   "spent": 82.25,
+   "tags": []
+  },
+  {
+   "id": 81,
+   "name": "Customer 81",
+   "age": 23,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44225"
+   },
+   "spent": 154.32,
+   "tags": []
+  },
+  {
+   "id": 82,
+   "name": "Customer 82",
+   "age": 79,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44359"
+   },
+   "spent": 243.54,
+   "tags": []
+  },
+  {
+   "id": 83,
+   "name": "Customer 83",
+   "age": 19,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44752"
+   },
+   "spent": 128.59,
+   "tags": []
+  },
+  {
+   "id": 84,
+   "name": "Customer 84",
+   "age": 74,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44160"
+   },
+   "spent": 197.53,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 85,
+   "name": "Customer 85",
+   "age": 34,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44629"
+   },
+   "spent": 473.51,
+   "tags": []
+  },
+  {
+   "id": 86,
+   "name": "Customer 86",
+   "age": 76,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44044"
+   },
+   "spent": 195.75,
+   "tags": []
+  },
+  {
+   "id": 87,
+   "name": "Customer 87",
+   "age": 36,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44226"
+   },
+   "spent": 469.43,
+   "tags": []
+  },
+  {
+   "id": 88,
+   "name": "Customer 88",
+   "age": 69,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44194"
+   },
+   "spent": 188.6,
+   "tags": []
+  },
+  {
+   "id": 89,
+   "name": "Customer 89",
+   "age": 46,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44706"
+   },
+   "spent": 585.7,
+   "tags": []
+  },
+  {
+   "id": 90,
+   "name": "Customer 90",
+   "age": 73,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44320"
+   },
+   "spent": 201.83,
+   "tags": []
+  },
+  {
+   "id": 91,
+   "name": "Customer 91",
+   "age": null,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44197"
+   },
+   "spent": 865.7,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 92,
+   "name": "Customer 92",
+   "age": 35,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44618"
+   },
+   "spent": 129.8,
+   "tags": []
+  },
+  {
+   "id": 93,
+   "name": "Customer 93",
+   "age": 46,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44345"
+   },
+   "spent": 370.96,
+   "tags": []
+  },
+  {
+   "id": 94,
+   "name": "Customer 94",
+   "age": 30,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44434"
+   },
+   "spent": 416.46,
+   "tags": []
+  },
+  {
+   "id": 95,
+   "name": "Customer 95",
+   "age": 46,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44942"
+   },
+   "spent": 301.63,
+   "tags": []
+  },
+  {
+   "id": 96,
+   "name": "Customer 96",
+   "age": 69,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44686"
+   },
+   "spent": 266.21,
+   "tags": []
+  },
+  {
+   "id": 97,
+   "name": "Customer 97",
+   "age": 30,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44651"
+   },
+   "spent": 307.99,
+   "tags": []
+  },
+  {
+   "id": 98,
+   "name": "Customer 98",
+   "age": 54,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44802"
+   },
+   "spent": 118.86,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 99,
+   "name": "Customer 99",
+   "age": 38,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44579"
+   },
+   "spent": 351.03,
+   "tags": []
+  },
+  {
+   "id": 100,
+   "name": "Customer 100",
+   "age": 61,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44294"
+   },
+   "spent": 470.89,
+   "tags": []
+  },
+  {
+   "id": 101,
+   "name": "Customer 101",
+   "age": 59,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44140"
+   },
+   "spent": 166.4,
+   "tags": []
+  },
+  {
+   "id": 102,
+   "name": "Customer 102",
+   "age": 70,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44845"
+   },
+   "spent": 160.14,
+   "tags": []
+  },
+  {
+   "id": 103,
+   "name": "Customer 103",
+   "age": 61,
+   "active": "yes",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44581"
+   },
+   "spent": 119.56,
+   "tags": []
+  },
+  {
+   "id": 104,
+   "name": "Customer 104",
+   "age": 61,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44636"
+   },
+   "spent": 330.48,
+   "tags": []
+  },
+  {
+   "id": 105,
+   "name": "Customer 105",
+   "age": 48,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44918"
+   },
+   "spent": 391.34,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 106,
+   "name": "Customer 106",
+   "age": 20,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44857"
+   },
+   "spent": 64.86,
+   "tags": []
+  },
+  {
+   "id": 107,
+   "name": "Customer 107",
+   "age": 58,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44261"
+   },
+   "spent": 306.58,
+   "tags": []
+  },
+  {
+   "id": 108,
+   "name": "Customer 108",
+   "age": 55,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44799"
+   },
+   "spent": 192.74,
+   "tags": []
+  },
+  {
+   "id": 109,
+   "name": "Customer 109",
+   "age": 59,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44802"
+   },
+   "spent": 320.11,
+   "tags": []
+  },
+  {
+   "id": 110,
+   "name": "Customer 110",
+   "age": 28,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44336"
+   },
+   "spent": 291.54,
+   "tags": []
+  },
+  {
+   "id": 111,
+   "name": "Customer 111",
+   "age": 18,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44685"
+   },
+   "spent": 275.87,
+   "tags": []
+  },
+  {
+   "id": 112,
+   "name": "Customer 112",
+   "age": 52,
+   "active": "yes",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44671"
+   },
+   "spent": 268.52,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 113,
+   "name": "Customer 113",
+   "age": 54,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44500"
+   },
+   "spent": 245.27,
+   "tags": []
+  },
+  {
+   "id": 114,
+   "name": "Customer 114",
+   "age": 21,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44153"
+   },
+   "spent": 178.62,
+   "tags": []
+  },
+  {
+   "id": 115,
+   "name": "Customer 115",
+   "age": 45,
+   "active": "no",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44095"
+   },
+   "spent": 465.71,
+   "tags": []
+  },
+  {
+   "id": 116,
+   "name": "Customer 116",
+   "age": 69,
+   "active": "no",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44649"
+   },
+   "spent": 149.94,
+   "tags": []
+  },
+  {
+   "id": 117,
+   "name": "Customer 117",
+   "age": 46,
+   "active": "yes",
+   "address": {
+    "city": "kathmandu",
+    "zip": "44433"
+   },
+   "spent": 236.27,
+   "tags": []
+  },
+  {
+   "id": 118,
+   "name": "Customer 118",
+   "age": 59,
+   "active": "no",
+   "address": {
+    "city": "Lalitpur",
+    "zip": "44837"
+   },
+   "spent": 93.75,
+   "tags": []
+  },
+  {
+   "id": 119,
+   "name": "Customer 119",
+   "age": 55,
+   "active": "no",
+   "address": {
+    "city": "Kathmandu",
+    "zip": "44812"
+   },
+   "spent": 171.31,
+   "tags": [
+    "new"
+   ]
+  },
+  {
+   "id": 120,
+   "name": "Customer 120",
+   "age": 45,
+   "active": "yes",
+   "address": {
+    "city": "Pokhara",
+    "zip": "44122"
+   },
+   "spent": 251.18,
+   "tags": []
+  }
+ ]
+}

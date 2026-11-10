@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data cleaning - AutoAnalytics</title>
+<style>
+:root{--bg:#f6f7f4;--surface:#fff;--ink:#1d2421;--muted:#66706b;--line:#dfe3dc;--accent:#1f6f5c;--warn:#b4531c;--err:#b3261e;--ok:#1f6f5c}
+@media (prefers-color-scheme:dark){:root{--bg:#121715;--surface:#1a211e;--ink:#e8ece9;--muted:#98a39d;--line:#2a332f;--accent:#4fb89c;--warn:#e0884f;--err:#f08a82;--ok:#4fb89c}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line)}
+h1{font-size:20px;margin:0;font-weight:600}h2{font-size:14px;margin:0 0 12px;font-weight:600}
+.sub{color:var(--muted);font-size:13px}
+nav a{color:var(--accent);font-size:14px}
+main{max-width:1180px;margin:0 auto;padding:24px 28px;display:grid;gap:20px}
+.panel,.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.kpi b{display:block;font-size:24px;font-weight:600}.kpi span{color:var(--muted);font-size:13px}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;white-space:nowrap}
+select,input[type=text]{font:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--ink);max-width:190px}
+button,label.btn{background:var(--accent);color:#fff;border:0;border-radius:5px;padding:9px 16px;font:inherit;cursor:pointer}
+button.alt{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+button.ds{background:var(--surface);color:var(--ink);border:1px solid var(--line);margin:0 8px 8px 0;text-align:left}
+button.ds.on{border-color:var(--accent);outline:1px solid var(--accent)}
+button:focus-visible,label.btn:focus-within,select:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:12px 0}
+.tag{padding:1px 8px;border-radius:10px;font-size:12px;border:1px solid var(--line);color:var(--muted)}
+.bad{color:var(--warn)}.err{color:var(--err)}.ok{color:var(--ok)}
+.empty{color:var(--muted);padding:8px 0}
+li{margin:3px 0}ul{padding-left:18px;margin:8px 0}
+h3{font-size:15px;margin:22px 0 10px}h4{font-size:13px;margin:0 0 8px;font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:6px;padding:12px}
+.cv{position:relative;height:200px}
+table.heat td{text-align:center;min-width:64px}table.heat th{white-space:normal}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Data cleaning</h1><div class="sub">Upload JSON, XML, CSV or Excel. Check the quality, then fix missing values, odd values and outliers.</div></div>
+  <nav><a href="/">Sales dashboard</a></nav>
+  <label class="btn" id="upl">Upload file<input id="file" type="file" accept=".csv,.tsv,.txt,.json,.jsonl,.xml,.xlsx" hidden></label>
+</header>
+<main>
+  <div id="msg" class="sub" role="status"></div>
+  <section class="panel"><h2>Datasets</h2><div id="list"></div></section>
+  <div id="detail" hidden style="display:grid;gap:20px">
+    <section class="kpis" id="kpis"></section>
+    <section class="panel">
+      <h2 id="title">Columns</h2>
+      <div class="sub">Each column has a suggested fix. Change any choice, then apply. Your original data is never changed.</div>
+      <div class="row">
+        <label><input type="checkbox" id="dups"> Remove duplicate rows</label>
+        <label>Outlier method
+          <select id="method"><option value="iqr">Quartile range (IQR)</option><option value="zscore">Standard deviations (z-score)</option></select></label>
+        <button id="apply">Apply cleaning</button>
+        <button id="reset" class="alt">Use suggested fixes</button>
+      </div>
+      <div class="wrap"><table id="cols"></table></div>
+    </section>
+    <section class="panel" id="result" hidden></section>
+    <section class="panel" id="analysis">
+      <h2>Analysis</h2>
+      <div class="row"><button class="alt" id="anO">Original data</button><button class="alt" id="anC" hidden>Cleaned data</button><span class="sub" id="anNote"></span></div>
+      <div id="anBody"><div class="empty">Analyzing...</div></div>
+    </section>
+    <section class="panel">
+      <h2>Preview</h2>
+      <div class="row"><button class="alt" id="pvO">Original</button><button class="alt" id="pvC" hidden>Cleaned</button><span class="sub" id="pvNote"></span></div>
+      <div class="wrap"><table id="preview"></table></div>
+    </section>
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LBL={leave:"Leave as is",median:"Fill with median",mean:"Fill with mean",mode:"Fill with most common",constant:"Fill with a value",interpolate:"Interpolate",ffill:"Copy from row above",bfill:"Copy from row below",drop_rows:"Remove those rows",drop_column:"Remove column",keep:"Keep",cap:"Limit to normal range",null:"Treat as missing",flag:"Flag only",none:"No change",lower:"lowercase",upper:"UPPERCASE",title:"Title Case"};
+const NULLS={numeric:["leave","median","mean","interpolate","constant","ffill","bfill","drop_rows","drop_column"],datetime:["leave","constant","ffill","bfill","drop_rows","drop_column"],other:["leave","mode","constant","ffill","bfill","drop_rows","drop_column"]};
+const OUT=["keep","cap","median","mean","null","flag","drop_rows"];
+let cur=null,data=null,demo=false;
+const opts=(list,sel)=>list.map(v=>`<option value="${v}" ${v===sel?"selected":""}>${LBL[v]||v}</option>`).join("");
+async function api(u,o){const r=await fetch(u,o);const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.detail||"Request failed ("+r.status+")");return j}
+function msg(t,e){const m=$("#msg");m.textContent=t||"";m.className="sub "+(e?"err":"")}
+async function loadList(){
+  const L=await api("/api/datasets");
+  $("#list").innerHTML=L.length?L.map(d=>`<button class="ds ${d.id===cur?"on":""}" data-id="${d.id}">${esc(d.name)}<br><span class="sub">${d.fmt.toUpperCase()}, ${d.rows} rows, ${d.cols} columns${d.cleaned_at?", cleaned":""}</span></button>`).join(""):'<div class="empty">No datasets yet. Upload a file to start.</div>';
+}
+async function openDs(id){
+  cur=id;msg("");data=await api("/api/datasets/"+id);render();showPreview("original");loadAnalysis("original");loadList();
+}
+function kpi(a,b,c){return `<div class="kpi"><span>${a}</span><b class="${c||""}">${b}</b></div>`}
+function render(){
+  const p=data.profile;$("#detail").hidden=false;$("#title").textContent=data.name+": columns";
+  $("#kpis").innerHTML=kpi("Rows",p.rows)+kpi("Columns",p.cols)+kpi("Missing cells",p.null_cells,p.null_cells?"bad":"")+kpi("Duplicate rows",p.duplicate_rows,p.duplicate_rows?"bad":"")+kpi("Outlier cells",p.outlier_cells,p.outlier_cells?"bad":"")+kpi("Quality score",p.quality_score+"%");
+  const s=data.suggested_rules;$("#dups").checked=!!s.drop_duplicates;
+  $("#cols").innerHTML="<tr><th>Column</th><th>Missing</th><th>Outliers</th><th>Fix missing values</th><th>Fix outliers / text</th></tr>"+p.columns.map(c=>{
+    const sg=c.suggestion,nl=NULLS[c.kind]||NULLS.other;
+    const odd=c.invalid||c.null_tokens?`<div class="bad sub">${c.invalid+c.null_tokens} odd value(s)${c.invalid_examples.length?": "+c.invalid_examples.map(esc).join(", "):""}</div>`:"";
+    const o=c.outliers?`${c.outliers.count}<div class="sub">normal range ${c.outliers.lower} to ${c.outliers.upper}${c.outliers.examples.length?"<br>e.g. "+c.outliers.examples.join(", "):""}</div>`:(c.kind==="numeric"?"0":"");
+    let last="";
+    if(c.kind==="numeric")last=`<select class="out">${opts(OUT,sg.outliers)}</select>`;
+    else if(c.kind==="categorical"||c.kind==="text")last=`<select class="std">${opts(["none","lower","upper","title"],sg.standardize)}</select>${c.case_variants?`<div class="bad sub">${c.case_variants} spelling variant(s) differing only by case</div>`:""}`;
+    return `<tr data-col="${esc(c.name)}"><td>${esc(c.name)}<div class="sub">${c.kind}, ${c.unique} unique</div></td>
+      <td>${c.nulls} (${c.null_pct}%)${odd}</td><td>${o}</td>
+      <td><select class="nulls">${opts(nl,sg.nulls)}</select> <input type="text" class="fill" placeholder="value" value="${esc(sg.fill_value)}" ${sg.nulls==="constant"?"":"hidden"}></td><td>${last}</td></tr>`}).join("");
+  if(data.last_clean)showResult(data.last_clean);else $("#result").hidden=true;
+  $("#pvC").hidden=!data.last_clean;$("#anC").hidden=!data.last_clean;
+}
+function collect(){
+  const cols={};
+  document.querySelectorAll("#cols tr[data-col]").forEach(tr=>{
+    const r={nulls:tr.querySelector(".nulls").value,fill_value:tr.querySelector(".fill").value};
+    const o=tr.querySelector(".out");if(o)r.outliers=o.value;
+    const s=tr.querySelector(".std");if(s)r.standardize=s.value;
+    cols[tr.dataset.col]=r});
+  return {drop_duplicates:$("#dups").checked,outlier_method:$("#method").value,columns:cols};
+}
+function showResult(p){
+  const r=$("#result");r.hidden=false;
+  r.innerHTML=`<h2>Result</h2><div class="kpis">${kpi("Rows before",p.rows_before)}${kpi("Rows after",p.rows_after)}${kpi("Quality before",p.before.quality_score+"%")}${kpi("Quality after",p.after.quality_score+"%","ok")}${kpi("Missing cells after",p.after.null_cells)}${kpi("Outlier cells after",p.after.outlier_cells)}</div>
+  <h2 style="margin-top:16px">What changed</h2>${p.log.length?"<ul>"+p.log.map(l=>`<li><b>${esc(l.column)}</b>: ${esc(l.action)} (${l.count})</li>`).join("")+"</ul>":'<div class="empty">Nothing needed changing.</div>'}
+  <div class="row"><a href="/api/datasets/${cur}/download?version=cleaned"><button type="button">Download cleaned CSV</button></a><a href="/api/datasets/${cur}/download?version=original"><button type="button" class="alt">Download original as CSV</button></a></div>`;
+}
+async function showPreview(v){
+  try{const p=await api(`/api/datasets/${cur}/preview?version=${v}&limit=30`);
+  $("#pvNote").textContent=v==="original"?"First 30 rows exactly as read, including odd values.":"First 30 rows after cleaning.";
+  $("#preview").innerHTML="<tr>"+p.columns.map(c=>`<th>${esc(c)}</th>`).join("")+"</tr>"+p.rows.map(r=>"<tr>"+r.map(x=>`<td>${esc(x)}</td>`).join("")+"</tr>").join("")}catch(e){msg(e.message,1)}
+}
+let charts=[],anV="original";
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmtN=x=>x==null?"n/a":(Math.abs(x)>=1000?Math.round(x).toLocaleString():String(+Number(x).toPrecision(3)));
+function mk(id,cfg){const el=document.getElementById(id);if(el)charts.push(new Chart(el,cfg))}
+function copt(o){return Object.assign({responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:css("--line")},ticks:{maxTicksLimit:7,maxRotation:0,autoSkip:true}},y:{grid:{color:css("--line")},beginAtZero:true}}},o||{})}
+async function loadAnalysis(v){
+  anV=v;charts.forEach(c=>c.destroy());charts=[];
+  try{renderAnalysis(await api(`/api/datasets/${cur}/analysis?version=${v}`))}
+  catch(e){$("#anBody").innerHTML=`<div class="err">${esc(e.message)}</div>`}
+}
+function renderAnalysis(a){
+  Chart.defaults.color=css("--muted");
+  const acc=css("--accent");
+  $("#anNote").textContent=anV==="cleaned"?"Showing the cleaned data.":"Showing the original data (odd values read as missing).";
+  let h="<h3 style='margin-top:4px'>Key findings</h3>"+(a.insights.length?"<ul>"+a.insights.map(i=>`<li>${esc(i)}</li>`).join("")+"</ul>":"");
+  if(a.numeric.length)h+="<h3>Distributions of numeric columns</h3><div class='cards'>"+a.numeric.map((n,i)=>`<div class="card"><h4>${esc(n.name)}</h4><div class="cv"><canvas id="h${i}"></canvas></div><div class="sub">mean ${fmtN(n.stats.mean)}, median ${fmtN(n.stats.median)}, range ${fmtN(n.stats.min)} to ${fmtN(n.stats.max)}${n.outliers.count?`<br><span class="bad">${n.outliers.count} value(s) outside ${fmtN(n.outliers.lower)} to ${fmtN(n.outliers.upper)}</span>`:""}${n.hist.hidden?`<br>${n.hist.hidden} extreme value(s) not shown in the chart`:""}</div></div>`).join("")+"</div>";
+  if(a.categorical.length)h+="<h3>Categories</h3><div class='cards'>"+a.categorical.map((c,i)=>`<div class="card"><h4>${esc(c.name)}</h4><div class="cv" style="height:${Math.max(110,c.items.length*28+30)}px"><canvas id="c${i}"></canvas></div><div class="sub">${c.unique} different values${c.unique>c.items.length?", top "+c.items.length+" shown":""}</div></div>`).join("")+"</div>";
+  const ts=a.timeseries;
+  if(ts){h+=`<h3>Over time (by ${ts.period}, using ${esc(ts.column)})</h3><div class='cards'><div class="card"><h4>Rows per ${ts.period}</h4><div class="cv"><canvas id="t0"></canvas></div></div>`+ts.series.map((s,i)=>`<div class="card"><h4>Average ${esc(s.name)}</h4><div class="cv"><canvas id="t${i+1}"></canvas></div>${s.change_pct!=null?`<div class="sub">${s.change_pct>0?"+":""}${s.change_pct}% from start to end</div>`:""}</div>`).join("")+"</div>"}
+  const co=a.correlation;
+  if(co){h+="<h3>Relationships between numeric columns</h3><div class='sub'>Correlation from -1 to 1. Green: move together. Orange: move in opposite directions. Darker means stronger.</div><div class='wrap'><table class='heat'><tr><th></th>"+co.columns.map(c=>`<th>${esc(c)}</th>`).join("")+"</tr>"+co.columns.map((rn,i)=>`<tr><th>${esc(rn)}</th>`+co.matrix[i].map(r=>r==null?"<td>n/a</td>":`<td style="background:color-mix(in srgb, var(${r>=0?"--accent":"--warn"}) ${Math.round(Math.min(Math.abs(r),1)*70)}%, var(--surface))">${r.toFixed(2)}</td>`).join("")+"</tr>").join("")+"</table></div>"}
+  if(a.groups.length)h+="<h3>Comparing groups</h3><div class='cards'>"+a.groups.map((g,i)=>`<div class="card"><h4>Average ${esc(g.numeric)} by ${esc(g.category)}</h4><div class="cv" style="height:${Math.max(110,g.items.length*28+30)}px"><canvas id="g${i}"></canvas></div></div>`).join("")+"</div>";
+  $("#anBody").innerHTML=h;
+  a.numeric.forEach((n,i)=>mk("h"+i,{type:"bar",data:{labels:n.hist.labels,datasets:[{data:n.hist.counts,backgroundColor:acc,categoryPercentage:1,barPercentage:.95}]},options:copt({plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>n.hist.ranges[c[0].dataIndex],label:c=>c.parsed.y+" rows"}}}})}));
+  a.categorical.forEach((c,i)=>mk("c"+i,{type:"bar",data:{labels:c.items.map(x=>x.value),datasets:[{data:c.items.map(x=>x.count),backgroundColor:acc}]},options:copt({indexAxis:"y",scales:{x:{grid:{color:css("--line")},beginAtZero:true},y:{grid:{display:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>x.parsed.x+" rows ("+c.items[x.dataIndex].pct+"%)"}}}})}));
+  if(ts){mk("t0",{type:"line",data:{labels:ts.labels,datasets:[{data:ts.count,borderColor:acc,backgroundColor:acc,pointRadius:2,tension:.2}]},options:copt()});
+    ts.series.forEach((s,i)=>mk("t"+(i+1),{type:"line",data:{labels:ts.labels,datasets:[{data:s.values,borderColor:acc,backgroundColor:acc,pointRadius:2,tension:.2,spanGaps:true}]},options:copt({scales:{x:{grid:{color:css("--line")},ticks:{maxTicksLimit:7,maxRotation:0}},y:{grid:{color:css("--line")}}}})}))}
+  a.groups.forEach((g,i)=>mk("g"+i,{type:"bar",data:{labels:g.items.map(x=>x.name),datasets:[{data:g.items.map(x=>x.mean),backgroundColor:acc}]},options:copt({indexAxis:"y",scales:{x:{grid:{color:css("--line")}},y:{grid:{display:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>"average "+fmtN(x.parsed.x)+" ("+g.items[x.dataIndex].count+" rows)"}}}})}));
+}
+$("#anO").onclick=()=>loadAnalysis("original");$("#anC").onclick=()=>loadAnalysis("cleaned");
+$("#list").addEventListener("click",e=>{const b=e.target.closest("button.ds");if(b)openDs(b.dataset.id)});
+$("#cols").addEventListener("change",e=>{if(e.target.classList.contains("nulls")){e.target.closest("td").querySelector(".fill").hidden=e.target.value!=="constant"}});
+$("#reset").onclick=render;
+$("#pvO").onclick=()=>showPreview("original");$("#pvC").onclick=()=>showPreview("cleaned");
+$("#apply").onclick=async()=>{
+  try{msg("Cleaning...");const p=await api(`/api/datasets/${cur}/clean`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({rules:collect()})});
+  data.last_clean=p;showResult(p);$("#pvC").hidden=false;showPreview("cleaned");loadAnalysis("cleaned");msg("Done. The cleaned file is ready to download.");loadList()}catch(e){msg(e.message,1)}
+};
+$("#file").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;const fd=new FormData();fd.append("file",f);
+  try{msg("Reading file...");const d=await api("/api/datasets",{method:"POST",body:fd});await loadList();await openDs(d.id);msg("")}catch(er){msg(er.message,1)}
+  e.target.value="";
+});
+api("/api/config").then(c=>{demo=c.demo;if(demo){$("#upl").hidden=true;msg("Demo mode: sample files are preloaded. Uploads are disabled.")}});
+loadList().then(()=>{const b=document.querySelector("button.ds");if(b)openDs(b.dataset.id)});
+</script>
+</body>
+</html>
